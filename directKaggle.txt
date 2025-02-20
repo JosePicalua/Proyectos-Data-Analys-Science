@@ -1,0 +1,19 @@
+importar datos de kaggle por power sheall o bash
+
+# 1️⃣ Definir la variable de entorno para la API de Kaggle
+set KAGGLE_CONFIG_DIR=C:\Users\josep\.kaggle
+
+# 2️⃣ Navegar a la carpeta donde deseas descargar el dataset
+cd "C:\Users\josep\OneDrive\Escritorio\Proyectos-Junior\DataSet-Kaggle\Proyecto-4-VENTAS-Corporación-Favorita-Grocery-Sales-Forecasting"
+
+# 3️⃣ Descargar el dataset
+kaggle competitions download -c favorita-grocery-sales-forecasting
+
+
+
+Una vez que la descarga se complete, descomprime el archivo ZIP con:
+tar -xvzf favorita-grocery-sales-forecasting.zip
+
+Si tar no funciona en Windows, usa:
+powershell -command "Expand-Archive -Path favorita-grocery-sales-forecasting.zip -DestinationPath ."
+

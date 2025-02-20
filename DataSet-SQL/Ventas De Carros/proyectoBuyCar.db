@@ -1,0 +1,130 @@
+CONSSULTAS EN POWER BI
+Value.NativeQuery(
+    PostgreSQL.Database("localhost", "buy_cars"),
+    "SELECT 
+        v.marca AS Marca_de_Carro,
+        v.modelo AS Modelo_de_Carro,
+        ve.combustible,
+        SUM(ve.precio_final) AS total_ventas
+    FROM ventas ve
+    JOIN vehiculos v ON ve.vehiculo_id = v.id
+    WHERE EXTRACT(YEAR FROM ve.fecha_venta) BETWEEN 2023 AND 2025
+    GROUP BY v.marca, v.modelo, ve.combustible
+    ORDER BY v.marca",
+    null, 
+    [EnableFolding=true]
+)
+
+
+
+
+📊 ¿Cuál es la marca más vendida en el último año?
+
+R/ Para llevar a la consutla de Marca mas vendida en el ultimio año
+
+1. Hacemos consulta del total de ventas en metodos de pago por año
+
+1.1 realizacion de consulta para verificar fechas en el registro
+
+**consulta**
+
+SELECT 
+    MIN(CASE WHEN EXTRACT(YEAR FROM fecha_venta) = 2022 THEN fecha_venta END) AS minimo_2022,
+    MAX(CASE WHEN EXTRACT(YEAR FROM fecha_venta) = 2022 THEN fecha_venta END) AS maximo_2022,
+    MIN(CASE WHEN EXTRACT(YEAR FROM fecha_venta) = 2023 THEN fecha_venta END) AS minimo_2023,
+    MAX(CASE WHEN EXTRACT(YEAR FROM fecha_venta) = 2023 THEN fecha_venta END) AS maximo_2023,
+    MIN(CASE WHEN EXTRACT(YEAR FROM fecha_venta) = 2024 THEN fecha_venta END) AS minimo_2024,
+    MAX(CASE WHEN EXTRACT(YEAR FROM fecha_venta) = 2024 THEN fecha_venta END) AS maximo_2024,
+    MIN(CASE WHEN EXTRACT(YEAR FROM fecha_venta) = 2025 THEN fecha_venta END) AS minimo_2025,
+    MAX(CASE WHEN EXTRACT(YEAR FROM fecha_venta) = 2025 THEN fecha_venta END) AS maximo_2025
+FROM ventas;
+
+
+1.2 realizacion de consulta para verificar metodos de ventas por fecha
+
+**consulta**
+
+SELECT 
+    metodo_pago,
+    SUM(CASE WHEN EXTRACT(YEAR FROM fecha_venta) = 2022 THEN precio_final ELSE 0 END) AS total_2022,
+    SUM(CASE WHEN EXTRACT(YEAR FROM fecha_venta) = 2023 THEN precio_final ELSE 0 END) AS total_2023,
+    SUM(CASE WHEN EXTRACT(YEAR FROM fecha_venta) = 2024 THEN precio_final ELSE 0 END) AS total_2024,
+	SUM(CASE WHEN EXTRACT(YEAR FROM fecha_venta) = 2025 THEN precio_final ELSE 0 END) AS total_2025
+FROM ventas
+GROUP BY metodo_pago;
+
+
+1.3 realizcion de consultapara verificar carros mas vendido por años 
+
+R/ explicacion de vehiculo_id de la tabla ventas, reemplazarlos por la marca de la tabla por marca de vehiculos con relacion a id
+
+Explicación:
+JOIN vehiculo v ON ve.vehiculo_id = v.id: Relaciona vehiculo_id en ventas con id en vehiculo para obtener la marca.
+GROUP BY v.marca: Agrupa los datos por marca en lugar de vehiculo_id.
+ORDER BY v.marca ASC: Ordena alfabéticamente por marca.
+
+**consulta**
+
+SELECT 
+    v.marca AS vehiculo_id,  -- Reemplaza el ID por la marca
+    SUM(CASE WHEN EXTRACT(YEAR FROM ve.fecha_venta) = 2022 THEN ve.precio_final ELSE 0 END) AS vendidos_2022,
+    SUM(CASE WHEN EXTRACT(YEAR FROM ve.fecha_venta) = 2023 THEN ve.precio_final ELSE 0 END) AS vendidos_2023,
+    SUM(CASE WHEN EXTRACT(YEAR FROM ve.fecha_venta) = 2024 THEN ve.precio_final ELSE 0 END) AS vendidos_2024,
+    SUM(CASE WHEN EXTRACT(YEAR FROM ve.fecha_venta) = 2025 THEN ve.precio_final ELSE 0 END) AS vendidos_2025
+FROM ventas ve
+JOIN vehiculos v ON ve.vehiculo_id = v.id  -- Relación entre ventas y vehículos
+GROUP BY v.marca
+ORDER BY v.marca ASC;
+
+
+
+R/ ventas de modelo de carro anualmente con referencia a marca
+SELECT 
+	v.modelo,
+    v.marca,  
+    SUM(CASE WHEN EXTRACT(YEAR FROM ve.fecha_venta) = 2022 THEN ve.precio_final ELSE 0 END) AS vendidos_2022,
+    SUM(CASE WHEN EXTRACT(YEAR FROM ve.fecha_venta) = 2023 THEN ve.precio_final ELSE 0 END) AS vendidos_2023,
+    SUM(CASE WHEN EXTRACT(YEAR FROM ve.fecha_venta) = 2024 THEN ve.precio_final ELSE 0 END) AS vendidos_2024,
+    SUM(CASE WHEN EXTRACT(YEAR FROM ve.fecha_venta) = 2025 THEN ve.precio_final ELSE 0 END) AS vendidos_2025
+FROM ventas ve
+INNER JOIN vehiculos v ON ve.vehiculo_id = v.id  -- Une la tabla ventas con vehiculo para obtener la marca
+GROUP BY  v.marca,v.modelo  -- Agrupa por ID y marca para evitar duplicados
+ORDER BY v.marca ASC
+
+
+
+🏆 ¿Qué modelo tiene más ventas en cada concesionario?
+
+R/ total de ventas por concesionario en tipo de modelo con marca
+
+select
+	v.marca as Marca_de_Carro,
+	v.modelo as Modelo_de_Carro,
+	concesionario_id,
+	SUM(precio_final) as total_ventas
+from ventas ve
+JOIN vehiculos v ON ve.vehiculo_id = v.id  -- Relación entre ventas y vehículos
+group by v.marca,v.modelo,concesionario_id
+order BY concesionario_id ASC
+
+
+📈 ¿Cuál es la tendencia de ventas de autos eléctricos en los últimos 3 años?
+
+R/ en los ultimos 3 años, en temad de autor electiros, a tenido un incremento favorable del 70% a comparacon 
+con el combustible
+
+SELECT
+    v.marca AS Marca_de_Carro,
+    v.modelo AS Modelo_de_Carro,
+    v.combustible,
+    SUM(ve.precio_final) AS total_ventas
+FROM ventas ve
+JOIN vehiculos v ON ve.vehiculo_id = v.id
+WHERE EXTRACT(YEAR FROM ve.fecha_venta) BETWEEN 2023 AND 2025
+GROUP BY v.marca, v.modelo, v.combustible
+ORDER BY v.marca;
+
+
+
+
+💰 ¿Cuáles son los ingresos totales por concesionario?
