@@ -1,0 +1,163 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 10px;
+    padding: 20px;
+}
+
+.cuadro {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease-in-out;
+}
+
+.cuadro:hover {
+    transform: scale(1.05);
+}
+
+.price-make{
+    grid-area: 1 / 1 / 4 / 5; 
+}
+
+
+.filtro {
+    border-radius: 20px; /* Bordes redondeados */
+    padding: 5px; /* Espaciado interno */
+    width: 100%; /* Ocupa todo el ancho del grid */
+    height: 45px; /* Ajuste de altura */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease-in-out;
+    color: black;
+}
+
+.filtro:hover {
+    background: rgba(135, 206, 250, 1); /* Azul sólido al pasar el mouse */
+}
+
+#dropdown-make {
+    width: 100% !important; /* Hace que ocupe todo el espacio */
+    height: 100%; /* Asegura que se expanda en altura */
+    border: none; /* Elimina el borde */
+    background: transparent; /* Fondo transparente */
+    font-size: 24px; /* Ajusta el tamaño del texto */
+    text-align: center; /* Centra el texto */
+    color-scheme: black;
+}
+
+.Select-control {
+    border: none !important; /* Elimina borde extra */
+    box-shadow: none !important; /* Elimina el efecto de sombra */
+    background: transparent !important; /* Hace el fondo transparente */
+}
+
+
+.Select-placeholder, 
+.css-1wa3eu0-placeholder {
+    color: black !important; /* Color negro */
+    font-style: italic; /* Texto en itálica */
+    font-weight: bold; /* Opcional: hace el texto más visible */
+}
+
+
+
+.metrica {
+    grid-area: 2 / 5 / 3 / 6;
+    background: linear-gradient(135deg, #ffffff, #f8f9fa);
+    border-radius: 15px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 95%;
+    height: 95%;
+    padding: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+.metrica:hover {
+    transform: scale(1.05);
+    box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Ajustar el gráfico dentro de la métrica */
+.metrica > div {
+    width: 85%;
+    height: 75%;
+    }
+
+
+
+.ganancia_perdida_porcentaje {
+    grid-area: 3 / 5 / 4 / 6; 
+    color: black;
+}
+
+.sumatotal {
+    grid-area: 4 / 1 / 5 / 2; 
+    background-color: #f4f4f4;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    border: 2px solid #ccc;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+    
+}
+
+.unidadestotal {
+    background-color: #f4f4f4;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    border: 2px solid #ccc;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+    grid-area: 4 / 2 / 5 / 3; 
+}
+
+.metriaInversion {
+    grid-area: 4 / 3 / 6 / 6; 
+    color: black;
+}
+
+.ventamayor {
+    grid-area: 5 / 1 / 5 / 2; 
+    background-color: #f4f4f4;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    border: 2px solid #ccc;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+
+}
+
+.ventamenor {
+    grid-area: 5 / 2 / 5 / 2; 
+    background-color: #f4f4f4;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    border: 2px solid #ccc;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+
+}
